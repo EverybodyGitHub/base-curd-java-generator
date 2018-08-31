@@ -40,9 +40,28 @@ public class VoHandler extends BaseHandler<VoInfo> {
         for (Entry<String, String> entry : entityInfo.getPropTypes().entrySet()) {
             String propName = entry.getKey();
             String propType = entry.getValue();
-            if(StringUtils.equalsIgnoreCase("id",propName)){
+            if (StringUtils.equalsIgnoreCase("id", propName)) {
                 continue;
             }
+            if (StringUtils.equalsIgnoreCase("createTime", propName) && propRemarks.containsKey("createUser")) {
+                continue;
+            }
+            if (StringUtils.equalsIgnoreCase("createUser", propName)) {
+                continue;
+            }
+            if (StringUtils.equalsIgnoreCase("createUserName", propName)) {
+                continue;
+            }
+            if (StringUtils.equalsIgnoreCase("updateUser", propName)) {
+                continue;
+            }
+            if (StringUtils.equalsIgnoreCase("updateUserName", propName)) {
+                continue;
+            }
+            if (StringUtils.equalsIgnoreCase("updateTime", propName)) {
+                continue;
+            }
+
             // 注释、类型、名称
             sb.append("    /**\n")
                 .append("\t"+propRemarks.get(propName))

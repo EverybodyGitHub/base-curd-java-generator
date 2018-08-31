@@ -38,6 +38,11 @@ public class EndpointInfo {
     private String baseEnvelopPackageStr;
 
     /**
+     * rest包名
+     */
+    private String baseRequestMappingPackage;
+
+    /**
      * rest
      */
     private String baseRequestMappingName;
@@ -92,6 +97,14 @@ public class EndpointInfo {
 
     public void setEntityVarName(String entityVarName) {
         this.entityVarName = entityVarName;
+    }
+
+    public String getBaseRequestMappingPackage() {
+        return baseRequestMappingPackage;
+    }
+
+    public void setBaseRequestMappingPackage(String baseRequestMappingPackage) {
+        this.baseRequestMappingPackage = baseRequestMappingPackage;
     }
 
     public String getBaseRequestMappingName() {

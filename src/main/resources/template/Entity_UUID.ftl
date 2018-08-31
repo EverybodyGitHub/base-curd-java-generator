@@ -1,7 +1,6 @@
 package ${packageStr};
-import java.io.Serializable;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+
+import com.yihu.jw.entity.UuidIdentityEntityWithOperator;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -20,8 +19,4 @@ public class ${className} extends UuidIdentityEntityWithOperator {
 ${propertiesStr}
 ${methodStr}
 
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
 }

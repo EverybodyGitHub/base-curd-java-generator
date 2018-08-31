@@ -1,6 +1,6 @@
 package ${packageStr};
 
-import ${baseEntityDaoPackageStr}.${entityClassName}Dao;
+import ${baseEntityDaoPackageStr}.${entityName}Dao;
 import ${baseJpaServicePackageStr}.${baseJpaService};
 import org.springframework.stereotype.Service;
 ${importStr}
@@ -18,5 +18,5 @@ ${importStr}
  * @since 1.
  */
 @Service
-public class ${entityClassName}Service extends ${baseJpaService}<${entityClassName}, ${entityClassName}Dao> {
+public class ${className} extends ${baseJpaService}<${entityName}DO, ${entityName}Dao> {
 }

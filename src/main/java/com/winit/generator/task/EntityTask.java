@@ -85,6 +85,7 @@ public class EntityTask extends AbstractApplicationTask {
             serviceInfo.setImportStr("import " + entityInfo.getEntityPackage() + Constants.CHARACTER_DOT + entityInfo.getClassName() + Constants.CHARACTER_SPLIT);
             serviceInfo.setDaoInfo(daoInfo);
             serviceInfo.setEntityInfo(entityInfo);
+            serviceInfo.setClassName(entityInfo.getEntityName() + Constants.SERVICE_SUFFIX);
             serviceInfo.setBaseJpaService(Configuration.getString("baseJpaService.className"));
             serviceInfo.setBaseJpaServicePackageStr(Configuration.getString("baseJpaService.package"));
             serviceInfoList.add(serviceInfo);
@@ -97,7 +98,7 @@ public class EntityTask extends AbstractApplicationTask {
             endpointInfo.setServiceInfo(serviceInfo);
             endpointInfo.setEntityVarName(entityInfo.getEntityName().substring(0,1).toLowerCase()+entityInfo.getEntityName().substring(1,entityInfo.getEntityName().length()));
             endpointInfo.setBaseEnvelopPackageStr(Configuration.getString("endpoint.baseEnvelopPackage"));
-            endpointInfo.setBaseEnvelopPackageStr(Configuration.getString("endpoint.baseRequestMappingPackage"));
+            endpointInfo.setBaseRequestMappingPackage(Configuration.getString("endpoint.baseRequestMappingPackage"));
             endpointInfo.setBaseRequestMappingName(Configuration.getString("endpoint.baseRequestMappingName"));
             endpointInfoList.add(endpointInfo);
 
