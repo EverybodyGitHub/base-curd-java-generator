@@ -4,6 +4,8 @@ public class ServiceInfo {
 
     private String packageStr;
 
+    private String className;
+
     private EntityInfo entityInfo;
 
     private DaoInfo daoInfo;
@@ -17,6 +19,14 @@ public class ServiceInfo {
     private String baseJpaService;
 
     private String BaseJpaServicePackageStr;
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
 
     public String getPackageStr() {
         return packageStr;

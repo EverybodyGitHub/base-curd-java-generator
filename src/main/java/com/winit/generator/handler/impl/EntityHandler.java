@@ -42,7 +42,25 @@ public class EntityHandler extends BaseHandler<EntityInfo> {
         for (Entry<String, String> entry : entityInfo.getPropTypes().entrySet()) {
             String propName = entry.getKey();
             String propType = entry.getValue();
-            if(StringUtils.equalsIgnoreCase("id",propName)){
+            if (StringUtils.equalsIgnoreCase("id", propName)) {
+                continue;
+            }
+            if (StringUtils.equalsIgnoreCase("createTime", propName) && propColumns.containsKey("createUser")) {
+                continue;
+            }
+            if (StringUtils.equalsIgnoreCase("createUser", propName)) {
+                continue;
+            }
+            if (StringUtils.equalsIgnoreCase("createUserName", propName)) {
+                continue;
+            }
+            if (StringUtils.equalsIgnoreCase("updateUser", propName)) {
+                continue;
+            }
+            if (StringUtils.equalsIgnoreCase("updateUserName", propName)) {
+                continue;
+            }
+            if (StringUtils.equalsIgnoreCase("updateTime", propName)) {
                 continue;
             }
 

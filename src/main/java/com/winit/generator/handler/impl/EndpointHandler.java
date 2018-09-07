@@ -30,6 +30,7 @@ public class EndpointHandler extends BaseHandler<EndpointInfo> {
         this.param.put("baseEnvelopPackageStr", info.getBaseEnvelopPackageStr());
         this.param.put("ServicePackageStr", info.getServiceInfo().getPackageStr());
         this.param.put("entityVarName", info.getEntityVarName());
+        this.param.put("baseRequestMappingPackage", info.getBaseRequestMappingPackage());
         this.param.put("baseRequestMappingName", info.getBaseRequestMappingName());
     }
 

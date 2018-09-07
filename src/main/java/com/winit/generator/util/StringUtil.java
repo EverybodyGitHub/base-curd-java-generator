@@ -41,7 +41,7 @@ public class StringUtil {
 
     /**
      * upperFirst: 将字符串的首字母转换为大写. <br/>
-     * 
+     *
      * @author qiyongkang
      * @param str 要转换的字符串
      * @return 转换之后的字符串
@@ -59,7 +59,7 @@ public class StringUtil {
 
     /**
      * 将字符串拆分为list
-     * 
+     *
      * @param str
      * @param regex
      * @return
@@ -75,7 +75,7 @@ public class StringUtil {
 
     /**
      * 将数据库字段名，转为属性名 TODO Add comments here.
-     * 
+     *
      * @param fieldName
      * @return
      */
@@ -94,7 +94,7 @@ public class StringUtil {
 
     /**
      * 生成随机序列值
-     * 
+     *
      * @return
      */
     public static String generate16LongNum() {
@@ -107,11 +107,16 @@ public class StringUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(subBySplit("BirthdayReminder\\生日名单.xls", "/"));
+        /*System.out.println(subBySplit("BirthdayReminder\\生日名单.xls", "/"));
         System.out.println(convertFieldName2PropName("qyk_yong_kang"));
         for (int i = 0; i < 1000; i++) {
             System.out.println(generate16LongNum());
-        }
+        }*/
 
+        String str = "base_org,base_doctor,base_doctor_role_dict,base_doctor_hospital,base_team,base_team_member,base_patient,base_province,base_city,base_town,base_street,dict_job_title,dict_medicine,dict_icd10,dict_health_problem,dict_hospital_dept";
+        for (String s : str.split(",")) {
+            String name = convertFieldName2PropName(s);
+            System.out.print( upperFirst(name) + ",");
+        }
     }
 }

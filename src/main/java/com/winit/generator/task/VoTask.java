@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public class VoTask extends AbstractApplicationTask {
 
-    private static String VO_INTEGER_ID_FTL = "template/Vo_UUID.ftl";
+    private static String VO_INTEGER_ID_FTL = "template/Vo_IntegerId.ftl";
     private static String VO_UUID_FTL = "template/Vo_UUID.ftl";
     private List<VoInfo>  voList;
 

@@ -13,19 +13,21 @@ public class ServiceHandler extends BaseHandler<ServiceInfo> {
         this.info = info;
         this.ftlName = ftlName;
         this.savePath = Configuration.getString("base.baseDir") + File.separator
-                        + Configuration.getString("service.path") + File.separator + info.getEntityInfo().getEntityName()
+                        + Configuration.getString("service.path") + File.separator + info.getClassName()
                         + Constants.FILE_SUFFIX_JAVA;
     }
 
     @Override
     public void combileParams(ServiceInfo info) {
         this.param.put("packageStr", info.getPackageStr());
+        this.param.put("importStr", info.getImportStr());
         this.param.put("baseEntityPackageStr", info.getEntityInfo().getEntityPackage());
         this.param.put("baseEntityDaoPackageStr", info.getDaoInfo().getPackageStr());
         this.param.put("baseJpaServicePackageStr", info.getBaseJpaServicePackageStr());
-        this.param.put("entityClassName", info.getEntityInfo().getEntityName());
+        this.param.put("entityName", info.getEntityInfo().getEntityName());
         this.param.put("baseJpaService", info.getBaseJpaService());
         this.param.put("entityDesc", info.getEntityInfo().getEntityDesc());
+        this.param.put("className", info.getClassName());
     }
 
 }

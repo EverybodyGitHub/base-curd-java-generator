@@ -7,7 +7,7 @@ import ${baseEnvelopPackageStr}.ListEnvelop;
 import ${baseEnvelopPackageStr}.ObjEnvelop;
 import ${baseEnvelopPackageStr}.PageEnvelop;
 import ${baseEnvelopPackageStr}.endpoint.EnvelopRestEndpoint;
-import com.yihu.jw.rm.base.BaseRequestMapping;
+import ${baseRequestMappingPackage}.${baseRequestMappingName};
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -20,7 +20,7 @@ ${importStr}
 
 /**
 *
-* ${entityDesc}Dao
+* ${entityDesc}控制器
 *
 * @version
 * <pre>
@@ -48,7 +48,7 @@ public ObjEnvelop<${entityName}VO> create (
     return success(${entityVarName}, ${entityName}VO.class);
     }
 
-    @PostMapping(value = ${BaseRequestMappingName}.${entityName}.DELETE)
+    @PostMapping(value = ${baseRequestMappingName}.${entityName}.DELETE)
     @ApiOperation(value = "删除")
     public Envelop delete(
     @ApiParam(name = "ids", value = "id串，中间用,分隔", required = true)
@@ -86,7 +86,7 @@ public ObjEnvelop<${entityName}VO> create (
             List<${entityName}DO> ${entityVarName}s = ${entityVarName}Service.search(fields, filters, sorts, page, size);
                 int count = (int)${entityVarName}Service.getCount(filters);
                 return success(${entityVarName}s, count, page, size, ${entityName}VO.class);
-                }
+         }
 
          @GetMapping(value = ${baseRequestMappingName}.${entityName}.LIST)
          @ApiOperation(value = "获取列表")
@@ -99,6 +99,6 @@ public ObjEnvelop<${entityName}VO> create (
              @RequestParam(value = "sorts", required = false) String sorts) throws Exception {
              List<${entityName}DO> ${entityVarName}s = ${entityVarName}Service.search(fields, filters, sorts);
                   return success(${entityVarName}s, ${entityName}VO.class);
-                  }
+         }
 
  }
