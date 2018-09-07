@@ -22,5 +22,4 @@ public class ${className} extends IntegerIdentityVO{
 
 ${propertiesStr}
 ${methodStr}
-
 }

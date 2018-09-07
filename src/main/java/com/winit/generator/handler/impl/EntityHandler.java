@@ -66,10 +66,15 @@ public class EntityHandler extends BaseHandler<EntityInfo> {
 
             // 注释、类型、名称
             sb.append("    /**\n")
-                    .append("\t* "+propRemarks.get(propName))
-                    .append("\n")
-                    .append("\t*/\n")
-                    .append("    private ")
+                    .append("\t * " + propRemarks.get(propName)+"\n")
+                    .append("\t */\r\n");
+
+            if(StringUtils.equalsIgnoreCase("date",propType)){
+                sb.append("\t")
+                        .append("@JsonFormat(pattern = \"yyyy-MM-dd HH:mm:ss\", timezone = \"GMT+08:00\")\n");
+            }
+            sb.append("\t")
+                    .append("private ")
                     .append(propType)
                     .append(" ")
                     .append(propName)

@@ -1,13 +1,13 @@
 package com.winit.generator.task;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//import com.mysql.cj.MysqlConnection;
+//import com.mysql.cj.jdbc.DatabaseMetaDataUsingInfoSchema;
 import com.winit.generator.Constants;
 import com.winit.generator.config.Configuration;
 import com.winit.generator.framework.AbstractApplicationTask;
@@ -53,32 +53,27 @@ public class InitTask extends AbstractApplicationTask {
         context.setAttribute("baseColumns", baseColumnList);
 
         // 获取所有需要生成的表名
-        List<String> tableList = StringUtil.splitStr2List(Configuration.getString("base.tableNames").toLowerCase(),
-            Constants.CHARACTER_COMMA);
+        List<String> tableList = StringUtil.splitStr2List(Configuration.getString("base.tableNames").toLowerCase(),Constants.CHARACTER_COMMA);
         logger.info("需要生成的表：{}", tableList);
 
         // 对应的实体名
-        List<String> entityNames = StringUtil.splitStr2List(Configuration.getString("base.entityNames"),
-            Constants.CHARACTER_COMMA);
+//        List<String> entityNames = StringUtil.splitStr2List(Configuration.getString("base.entityNames"),Constants.CHARACTER_COMMA);
+        List<String> entityNames =  new ArrayList<String>();
 
         // 实体对应的描述
-        List<String> entityDescs = StringUtil.splitStr2List(Configuration.getString("base.entityDescs"),
-            Constants.CHARACTER_COMMA);
+//        List<String> entityDescs = StringUtil.splitStr2List(Configuration.getString("base.entityDescs"),Constants.CHARACTER_COMMA);
+        List<String> entityDescs = new ArrayList<String>();
 
         // 添加映射关系
         Map<String, String> table2Entity = new HashMap<String, String>();
-        for (int i = 0; i < tableList.size(); i++) {
+       /* for (int i = 0; i < tableList.size(); i++) {
             table2Entity.put(tableList.get(i), entityNames.get(i));
-        }
+        }*/
 
         Map<String, String> entity2Desc = new HashMap<String, String>();
-        for (int i = 0; i < entityNames.size(); i++) {
+        /*for (int i = 0; i < entityNames.size(); i++) {
             entity2Desc.put(entityNames.get(i), entityDescs.get(i));
-        }
-
-        // 放入上下文
-        context.setAttribute("tableName.to.entityName", table2Entity);
-        context.setAttribute("entityName.to.desc", entity2Desc);
+        }*/
 
         // 连接数据库
         Connection conn = null;
@@ -88,6 +83,7 @@ public class InitTask extends AbstractApplicationTask {
         try {
             conn = DbUtil.getConn();
             DatabaseMetaData dbMetaData = conn.getMetaData();
+//            DatabaseMetaDataUsingInfoSchema databaseMetaDataUsingInfoSchema = new DatabaseMetaDataUsingInfoSchema(conn,"base",dbMetaData.resultSetFactory);
 
             String schemaPattern = Configuration.getString("base.schemaPattern");
 
@@ -95,11 +91,14 @@ public class InitTask extends AbstractApplicationTask {
             if (Configuration.getString("base.database").equals(Constants.DB_ORACLE)) {
                 tableRS = dbMetaData.getTables(null, schemaPattern, Constants.PERCENT, new String[] { "TABLE" });
             } else {
+
                 tableRS = dbMetaData.getTables(null, schemaPattern, Constants.EMPTY_STR, new String[] { "TABLE" });
+//                tableRS = dbMetaData.getSchemas();
             }
 
             // 遍历
             Map<String, TableInfo> tableInfos = new HashMap<String, TableInfo>();
+            String entityName = "";
             while (tableRS.next()) {
                 // 表名
                 String tableName = tableRS.getString("TABLE_NAME").toLowerCase();
@@ -112,7 +111,9 @@ public class InitTask extends AbstractApplicationTask {
                     tableInfo.setName(tableName);
 
                     // 表注释
-                    String tableRemark = tableRS.getString("REMARKS");
+//                    String tableRemark = tableRS.getString("REMARKS");
+                    String tableRemark = getTableComment(conn,conn.getCatalog(),tableName);
+//                    String tableRemark1 = tableRS.getString("TABLE_COMMENT");
                     tableInfo.setRemark(tableRemark);
                     logger.info("表{}的注释:{}", tableName, tableRemark);
 
@@ -120,6 +121,11 @@ public class InitTask extends AbstractApplicationTask {
                     String tableType = tableRS.getString("TABLE_TYPE");
                     tableInfo.setType(tableType);
                     logger.info("表{}的类型:{}", tableName, tableType);
+
+                    entityName = StringUtil.upperFirst(StringUtil.convertFieldName2PropName(tableName));
+                    // 添加映射关系
+                    table2Entity.put(tableName, entityName);
+                    entity2Desc.put(entityName, tableRemark);
 
                     // 字段
                     // 获取列的结果集
@@ -167,6 +173,8 @@ public class InitTask extends AbstractApplicationTask {
 
             // 放入上下文
             context.setAttribute("tableInfos", tableInfos);
+            context.setAttribute("tableName.to.entityName", table2Entity);
+            context.setAttribute("entityName.to.desc", entity2Desc);
 
             if (tableInfos.size() == 0) {
                 logger.info("在数据库没有匹配到相应的表");
@@ -181,6 +189,24 @@ public class InitTask extends AbstractApplicationTask {
         }
 
         return false;
+    }
+
+
+    public String getTableComment(Connection conn,String database,String tableName){
+        String comment = "";
+        try {
+            Statement statement = conn.createStatement();
+            String sql = "select table_comment from information_schema.`TABLES` where TABLE_SCHEMA = '"+ database +"' and TABLE_NAME = '"+ tableName +"'";
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()){
+                comment = resultSet.getString(1);
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return comment;
     }
 
 }

@@ -14,11 +14,11 @@ import org.apache.commons.lang3.StringUtils;
 
 public class VoHandler extends BaseHandler<VoInfo> {
 
-    public VoHandler(String ftlName, VoInfo info){
+    public VoHandler(String ftlName, VoInfo info) {
         this.ftlName = ftlName;
         this.info = info;
         this.savePath = Configuration.getString("base.baseDir") + File.separator + Configuration.getString("vo.path")
-                        + File.separator + info.getClassName() + Constants.FILE_SUFFIX_JAVA;
+                + File.separator + info.getClassName() + Constants.FILE_SUFFIX_JAVA;
     }
 
     @Override
@@ -61,43 +61,47 @@ public class VoHandler extends BaseHandler<VoInfo> {
             if (StringUtils.equalsIgnoreCase("updateTime", propName)) {
                 continue;
             }
-
             // 注释、类型、名称
             sb.append("    /**\n")
-                .append("\t"+propRemarks.get(propName))
-                .append("\t*/\r\n")
-                .append("    private ")
-                .append(propType)
-                .append(" ")
-                .append(propName)
-                .append(";\r\n");
+                    .append("\t * " + propRemarks.get(propName)+"\n")
+                    .append("\t */\r\n");
 
-            sbMethods.append("\t")
+            if(StringUtils.equalsIgnoreCase("date",propType)){
+                sb.append("\t")
+                        .append("@JsonFormat(pattern = \"yyyy-MM-dd HH:mm:ss\", timezone = \"GMT+08:00\")\n");
+            }
+            sb.append("\t")
                     .append("@ApiModelProperty(value = \"" + propRemarks.get(propName) + "\", example = \"模块1\")\n")
-                    .append("    public ")
-                .append(propType)
-                .append(" get")
-                .append(propName.substring(0, 1).toUpperCase())
-                .append(propName.substring(1))
-                .append("() {\r\n")
-                .append("        return ")
-                .append(propName)
-                .append(";\r\n")
-                .append("    }\r\n")
-                .append("    public void set")
-                .append(propName.substring(0, 1).toUpperCase())
-                .append(propName.substring(1))
-                .append("(")
-                .append(propType)
-                .append(" ")
-                .append(propName)
-                .append(") {\r\n")
-                .append("        this.")
-                .append(propName)
-                .append(" = ")
-                .append(propName)
-                .append(";\r\n    }\r\n")
-                .append("\r\n");
+                    .append("    private ")
+                    .append(propType)
+                    .append(" ")
+                    .append(propName)
+                    .append(";\r\n\n");
+
+            sbMethods.append("    public ")
+                    .append(propType)
+                    .append(" get")
+                    .append(propName.substring(0, 1).toUpperCase())
+                    .append(propName.substring(1))
+                    .append("() {\r\n")
+                    .append("        return ")
+                    .append(propName)
+                    .append(";\r\n")
+                    .append("    }\r\n")
+                    .append("    public void set")
+                    .append(propName.substring(0, 1).toUpperCase())
+                    .append(propName.substring(1))
+                    .append("(")
+                    .append(propType)
+                    .append(" ")
+                    .append(propName)
+                    .append(") {\r\n")
+                    .append("        this.")
+                    .append(propName)
+                    .append(" = ")
+                    .append(propName)
+                    .append(";\r\n    }\r\n")
+                    .append("\r\n");
         }
 
         this.param.put("propertiesStr", sb.toString());
