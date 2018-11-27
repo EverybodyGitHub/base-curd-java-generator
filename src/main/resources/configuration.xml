@@ -21,7 +21,7 @@
         <item name="baseColumns" value="ORGANIZATION_ID,CREATEDBY,CREATED,UPDATEDBY,UPDATED,IS_DELETE,IS_ACTIVE"
               description="基本的字段"/>
         <!--  <item name="baseColumns" value="ORG_ID,CREATEDBY,CREATED,UPDATEDBY,UPDATED,IS_DELETE,IS_ACTIVE" description="基本的字段"/> -->
-        <item name="tableNames" value="base_org,base_doctor,base_doctor_role_dict,base_doctor_role,base_doctor_hospital,base_patient,base_team,base_team_member,base_people_num,base_province,base_city,base_town,base_street,base_committee,dict_job_title,dict_medicine,dict_icd10,dict_health_problem,dict_disease,dict_hospital_dept" description="需要工具生成的表，逗号分隔"/>
+        <item name="tableNames" value="patient_medicare_card,help_center,feedback,account_appeal" description="需要工具生成的表，逗号分隔"/>
         <!--<item name="entityNames" value="BaseCommittee" description="实体名，逗号分隔， 与上面的表名一一对应"/>-->
         <!--<item name="entityDescs" value="区县居委会" description="实体描述， 与上面的实体名一一对应"/>-->
         <!-- <item name="tableNames" value="SMS_RECONCILIATION_TRACK" description="需要工具生成的表，逗号分隔"/>
@@ -41,17 +41,17 @@
     </category>
 
     <category name="dao" description="dao配置">
-        <item name="package" value="com.yihu.jw.base.dao" description="包路径"/>
+        <item name="package" value="com.yihu.jw.patient.dao" description="包路径"/>
         <item name="path" value="dao" description="dao存放的路径，相对于baseDir"/>
     </category>
 
     <category name="service" description="service配置">
-        <item name="package" value="com.yihu.jw.base.service.dict" description="包路径"/>
+        <item name="package" value="com.yihu.jw.patient.service" description="包路径"/>
         <item name="path" value="service" description="service存放的路径，相对于baseDir"/>
     </category>
 
     <category name="endpoint" description="endpoint配置">
-        <item name="package" value="com.yihu.jw.base.endpoint.dict" description="包路径"/>
+        <item name="package" value="com.yihu.jw.patient.endpoint" description="包路径"/>
         <item name="path" value="endpoint" description="endpoint存放的路径，相对于baseDir"/>
         <item name="baseEnvelopPackage" value="com.yihu.jw.restmodel.web" description="service存放的路径，相对于baseDir"/>
         <item name="baseRequestMappingPackage" value="com.yihu.jw.rm.base" description="service存放的路径，相对于baseDir"/>

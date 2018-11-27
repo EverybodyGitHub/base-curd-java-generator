@@ -3,6 +3,7 @@ package ${packageStr};
 import com.yihu.jw.restmodel.UuidIdentityVOWithOperator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import com.fasterxml.jackson.annotation.JsonFormat;
 ${importStr}
 
 /**

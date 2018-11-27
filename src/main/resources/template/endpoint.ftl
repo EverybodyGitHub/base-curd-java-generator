@@ -38,11 +38,11 @@ public class ${ClassName} extends EnvelopRestEndpoint {
 @Autowired
 private ${entityName}Service ${entityVarName}Service;
 
-@PostMapping(value = ${baseRequestMappingName}.${entityName}.CREATE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@PostMapping(value = ${baseRequestMappingName}.${entityName}.CREATE)
 @ApiOperation(value = "创建")
 public ObjEnvelop<${entityName}VO> create (
-    @ApiParam(name = "json_data", value = "Json数据", required = true)
-    @RequestBody String jsonData) throws Exception {
+    @ApiParam(name = "jsonData", value = "Json数据", required = true)
+    @RequestParam String jsonData) throws Exception {
     ${entityName}DO ${entityVarName} = toEntity(jsonData, ${entityName}DO.class);
     ${entityVarName} = ${entityVarName}Service.save(${entityVarName});
     return success(${entityVarName}, ${entityName}VO.class);
@@ -57,11 +57,11 @@ public ObjEnvelop<${entityName}VO> create (
     return success("删除成功");
     }
 
-    @PostMapping(value = ${baseRequestMappingName}.${entityName}.UPDATE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = ${baseRequestMappingName}.${entityName}.UPDATE)
     @ApiOperation(value = "更新")
     public ObjEnvelop<${entityName}VO> update (
-        @ApiParam(name = "json_data", value = "Json数据", required = true)
-        @RequestBody String jsonData) throws Exception {
+        @ApiParam(name = "jsonData", value = "Json数据", required = true)
+        @RequestParam String jsonData) throws Exception {
         ${entityName}DO ${entityVarName} = toEntity(jsonData, ${entityName}DO.class);
         if (null == ${entityVarName}.getId()) {
         return failed("ID不能为空", ObjEnvelop.class);
